@@ -34,7 +34,6 @@ def add_movie(name, year, args):
 def process_html(html, args):
     soup = BeautifulSoup(html, "html.parser")
 
-    print("Title,Year")
     for item in soup.find_all("div", {"class": "article_movie_title"}):
         add_movie(item.a.contents[0], item.span.contents[0].strip("()"), args)
 
@@ -42,6 +41,10 @@ def process_html(html, args):
     if args.no_reverse is False:
         movie_list.reverse()
 
+    # Print csv header!
+    print("Title,Year")
+
+    # Print the rest of the items
     for movie, year in movie_list:
         print(",".join([movie, year]))
 
@@ -54,9 +57,7 @@ parser.add_argument(
     help="Don't remove content in parenthesis from title",
 )
 parser.add_argument("url", help="url")
-
 args = parser.parse_args()
-
 
 movie_list = []
 
